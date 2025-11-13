@@ -91,6 +91,17 @@ pipeline{
                }
             }
         }
+        
+        stage('SonarQube Image Analysis') {
+         when { expression {  params.action == 'create' } }
+            steps {
+                script{
+                   
+                   def SonarQubecredentialsId = 'sonarqube-api'
+                   SonarQubeImageAnalysis(SonarQubecredentialsId)
+               }
+            }
+       }
         stage('Docker Image Push : DockerHub '){
          when { expression {  params.action == 'create' } }
             steps{
